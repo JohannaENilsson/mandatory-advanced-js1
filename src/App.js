@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import io from 'socket.io-client'; // använd i alla filer som använde rbiblioteket
 import './App.css';
 
 function App() {
