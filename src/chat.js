@@ -49,8 +49,9 @@ class MsgBox extends React.Component{
 class MyMsgBox extends React.Component{
     constructor(props){
         super(props);
-        this.state = {text: ''};
+        this.state = {content: '', username: 'pew' };
         this.onSubmit = this.onSubmit.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     onSubmit(e){
@@ -58,18 +59,23 @@ class MyMsgBox extends React.Component{
         this.setState(
         socket.emit('message', {
             username: 'pew',
-            content: 'test',
+            content: this.state.content,
         }, (response) => {
             console.log(response);
         })
         );
       }
+      onChange(e){
+          this.setState({content: e.target.value });
+          console.log(e.target.value);
+          console.log(typeof(e.target.value));
+      }
     render(){
         return(
             <div className={'MyMsgBox'}>
                 <form onSubmit={this.onSubmit}>
-                <span className={'userName'}>Username</span>
-                <textarea></textarea>
+                <span >Username</span>
+                <textarea type='text' onChange={this.onChange} value={this.state.content} ></textarea>
                 <button>Send</button>
                 </form>
             </div>
