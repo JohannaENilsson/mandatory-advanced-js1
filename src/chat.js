@@ -16,21 +16,27 @@ class Chat extends React.Component {
     socket.on("connect", function() {
       console.log("Well done!");
     });
+
     socket.on('new_message', message => {
-        console.log( message);
+      let stateCopy = this.state.msg.slice(1);
+      console.log(stateCopy);
+
+      stateCopy.push(message);
+      this.setState({msg: stateCopy});
+        
      }); 
 
      socket.on("messages", data => {
       this.setState({ msg: data });
       console.log(this.state);
-      console.log(data[0].username);
     });
      
   }
+
   render() {
     return (
       <>
-        <MsgBox msg={this.state.msg}/>
+        <MsgBox msg={this.state.msg} />
         <MyMsgBox />
       </>
     );
@@ -46,17 +52,20 @@ class MsgBox extends React.Component {
     onChange(e){
         this.setState({content: e.target.value} );
     }
+
   
   render() {
     console.log(this.props.msg);
+ 
     const msgList = this.props.msg.map(msg => {
-          return msg.username !== null ? (
-            <div className="MsgBox" key={msg.id}>
+          return msg.id !== null ? (
+            <div className="MsgRow" key={msg.id}>
               <span>User: {msg.username}</span>
-              <div>Sent:  {msg.content}</div>
+              <div>{msg.content}</div>
             </div>
           ) : null;
         });
+
 
     return (
 
@@ -69,7 +78,7 @@ class MsgBox extends React.Component {
 class MyMsgBox extends React.Component{
     constructor(props){
         super(props);
-        this.state = {content: '', username: 'pew' };
+        this.state = {content: '', username: '' };
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
@@ -78,12 +87,13 @@ class MyMsgBox extends React.Component{
         e.preventDefault();
         this.setState(
         socket.emit('message', {
-            username: 'pew',
+            username: 'now',
             content: this.state.content,
         }, (response) => {
             console.log(response);
         })
         );
+        this.setState({ content: '' });
         
       }
       // Lyssnar bara på textarean
