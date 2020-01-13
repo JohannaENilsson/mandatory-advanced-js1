@@ -5,7 +5,7 @@ class Login extends React.Component {
     constructor(props){
         super(props);
         this.state = { value: ''};
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
     }
 
@@ -14,7 +14,7 @@ class Login extends React.Component {
         this.setState({ value: event.target.value });
       }
     
-      handleSubmit = (e) => {
+      onSubmit = (e) => {
         e.preventDefault();
         console.log(e.target);
       }
@@ -27,7 +27,7 @@ class Login extends React.Component {
         <>
         <p>Choose your username</p>
         <input onChange={this.onChange} type="text" value={this.state.value} />
-        <button>Login</button> 
+        <button onSubmit={ this.onSubmit }>Login</button> 
         </>
         );
     }
