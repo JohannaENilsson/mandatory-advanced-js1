@@ -8,7 +8,7 @@ import Login from "./login.js";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: "Arne", active: false };
+    this.state = { username: "", active: false };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleLogin = this.onHandleLogin.bind(this);
     this.onHandleCloseChat = this.onHandleCloseChat.bind(this);
@@ -16,7 +16,8 @@ class App extends React.Component {
   }
 
   onHandleLogin(e){
-    let valid = /^[0-9a-zA-Z]/.test(this.state.username);
+    let valid = /^[^-\s][a-zåäöA-ZÅÄÖ0-9-_\s?]{1,12}$/.test(this.state.username);
+    //^[^-\s][a-zåäöA-ZÅÄÖ0-9_\s-]{1,12}+$
     if(valid){
       this.setState({active: true});
       console.log('Username ok');
@@ -34,18 +35,15 @@ class App extends React.Component {
 
    onHandleCloseChat(){
      this.setState({
-      //  username: '',
+       username: '',
        active: false
      });
    }
 
-  // username: '' -> rensar
+
 
   render() {
-    
 
-    // login = <Login>
-    // ChatView = <Chat> Måste ta med username in
     let login;
     let closeChat;
     let chatView;
