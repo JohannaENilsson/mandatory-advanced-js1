@@ -16,7 +16,7 @@ class App extends React.Component {
   }
 
   onHandleLogin(e){
-    let valid = /^[^-\s][a-zåäöA-ZÅÄÖ0-9-_\s?]{1,12}$/.test(this.state.username);
+    let valid = /^[^-\s][a-zåäöA-ZÅÄÖ0-9-_\s]{1,12}$/.test(this.state.username);
     //^[^-\s][a-zåäöA-ZÅÄÖ0-9_\s-]{1,12}+$
     if(valid){
       this.setState({active: true});
@@ -29,7 +29,7 @@ class App extends React.Component {
 
   onHandleChange(value) {
     this.setState({ username: value });
-    console.log(this.state.username);
+    // console.log(this.state.username);
   }
   
 

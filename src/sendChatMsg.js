@@ -1,7 +1,6 @@
 import React from "react";
 import io from "socket.io-client";
 
-
 const socket = io("http://3.120.96.16:3000");
 
 class SendChatMsg extends React.Component {
@@ -14,20 +13,26 @@ class SendChatMsg extends React.Component {
   }
 
   onSubmit(e) {
+    let valid = /^[^-\s][a-zåäöA-ZÅÄÖ0-9-_\s?]{1,200}$/.test(e.target.value);
+    console.log(valid);
     e.preventDefault();
-    this.setState(
-      socket.emit(
-        "message",
-        {
-          username: this.props.value,
-          content: this.state.content
-        },
-        response => {
-          console.log(response);
-        }
-      )
-    );
-    this.setState({ content: "" });
+    if (valid) {
+      this.setState(
+        socket.emit(
+          "message",
+          {
+            username: this.props.value,
+            content: this.state.content
+          },
+          response => {
+            console.log(response);
+          }
+        )
+      );
+      this.setState({ content: "" });
+    } else {
+      console.log("Fail");
+    }
   }
 
   onChange(e) {
@@ -43,7 +48,7 @@ class SendChatMsg extends React.Component {
   };
 
   render() {
-    console.log(this.props.value);
+    // console.log(this.props.value);
     return (
       <div className={"SendChatMsg"}>
         <form onSubmit={this.onSubmit} onKeyPress={this.onKeyPress}>

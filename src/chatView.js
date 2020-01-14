@@ -16,12 +16,10 @@ class ChatView extends React.Component {
   }
   componentDidMount() {
     this.socket = io("http://3.120.96.16:3000");
-    this.socket.on("connect", function() {
-      console.log("Well done!");
-    });
-
+ 
     this.socket.on("new_message", message => {
       let stateCopy = this.state.messages.slice(1);
+      console.log(stateCopy);
       stateCopy.push(message);
       this.setState({ messages: stateCopy });
       console.log(message);
