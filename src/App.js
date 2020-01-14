@@ -11,16 +11,18 @@ class App extends React.Component {
     this.state = { username: "Arne", active: false };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleLogin = this.onHandleLogin.bind(this);
+    this.onHandleCloseChat = this.onHandleCloseChat.bind(this);
  
   }
 
   onHandleLogin(e){
-    let valid = /^[0-9]/.test(this.state.username);
+    let valid = /^[0-9a-zA-Z]/.test(this.state.username);
     if(valid){
       this.setState({active: true});
+      console.log('Username ok');
+    } else {
+      console.log('Invalid username');
     }
-    
-    console.log(e.target);
   }
 
 
@@ -28,9 +30,15 @@ class App extends React.Component {
     this.setState({ username: value });
     console.log(this.state.username);
   }
-  //inputvalue
+  
 
-  //handleExitChat
+   onHandleCloseChat(){
+     this.setState({
+      //  username: '',
+       active: false
+     });
+   }
+
   // username: '' -> rensar
 
   render() {
@@ -48,12 +56,11 @@ class App extends React.Component {
         <Login onChange={this.onHandleChange} 
         onSubmit={this.onHandleLogin}
           value={this.state.username} 
-          
         />
       );
     } else {
-      closeChat = <CloseChat />;
-      chatView = <ChatView />;
+      closeChat = <CloseChat onClick={this.onHandleCloseChat}/>;
+      chatView = <ChatView onClick={this.onHandleCloseChat}/>;
       sendChatMsg = <SendChatMsg value={this.state.username} />;
     }
     return (

@@ -9,25 +9,34 @@ class ChatView extends React.Component {
     super(props);
     this.state = { messages: [] };
     this.onChange = this.onChange.bind(this);
+    this.socket = null;
+    
   }
   componentDidMount() {
-    const socket = io("http://3.120.96.16:3000");
-    socket.on("connect", function() {
+    this.socket = io("http://3.120.96.16:3000");
+    this.socket.on("connect", function() {
       console.log("Well done!");
     });
 
-    socket.on("new_message", message => {
+    this.socket.on("new_message", message => {
       let stateCopy = this.state.messages.slice(1);
       stateCopy.push(message);
       this.setState({ messages: stateCopy });
       console.log(message);
     });
 
-    socket.on("messages", data => {
+    this.socket.on("messages", data => {
       this.setState({ messages: data });
       console.log(this.state);
     });
   }
+
+  componentWillUnmount(){
+    this.socket.close(this.props.onClick);
+    console.log(this.socket);
+  }
+
+  
   onChange(e) {
     this.setState({ content: e.target.value });
   }

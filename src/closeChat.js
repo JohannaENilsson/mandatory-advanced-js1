@@ -1,18 +1,23 @@
-import React from 'react';
+import React from "react";
 
-class CloseChat extends React.Component{
-  constructor(props){
+class CloseChat extends React.Component {
+  constructor(props) {
     super(props);
-    this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
-  onChange(e){
+  onClick(e) {
     e.preventDefault();
-    console.log('you clicked me!');
-
+    this.props.onClick(e.target);
+    console.log("you clicked me!");
   }
+
   render() {
     return (
-      <> <button className={'closeChat'} onChange={this.onChange}>X</button>
+      <>
+        {" "}
+        <button className={"closeChat"} onClick={this.onClick}>
+          X
+        </button>
       </>
     );
   }
