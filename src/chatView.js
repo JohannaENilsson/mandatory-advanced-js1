@@ -1,5 +1,7 @@
 import React from "react";
 import io from "socket.io-client";
+import {emojify} from 'react-emojione';
+import Linkify from 'react-linkify';
 
 // när chatvyn Inmount -> connection till socket och eventlyssnarna
 // får meddelande uppdat staten
@@ -46,7 +48,7 @@ class ChatView extends React.Component {
       return msg.id !== null ? (
         <div className="MsgRow" key={msg.id}>
           <span>{msg.username} says </span>
-          <div>{msg.content}</div>
+          <div><Linkify>{emojify(msg.content)}</Linkify></div>
         </div>
       ) : null;
     });
