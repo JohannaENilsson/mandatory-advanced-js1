@@ -14,23 +14,25 @@ class SendChatMsg extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
-    if (this.state.content.length > 0 && this.state.content.length <= 200) {
-      this.setState(
-        socket.emit(
-          "message",
-          {
-            username: this.props.value,
-            content: this.state.content
-          },
-          response => {
-            console.log(response);
-          }
-        )
-      );
-      this.setState({ content: "" });
-    } else {
-      this.setState({ messageLength: false });
-      console.log("msg to long");
+    if (this.state.content.trim().length !== 0) {
+      if (this.state.content.length > 0 && this.state.content.length <= 200) {
+        this.setState(
+          socket.emit(
+            "message",
+            {
+              username: this.props.value,
+              content: this.state.content
+            },
+            response => {
+              console.log(response);
+            }
+          )
+        );
+        this.setState({ content: "" });
+      } else {
+        this.setState({ messageLength: false });
+        console.log("msg to long");
+      }
     }
   }
 

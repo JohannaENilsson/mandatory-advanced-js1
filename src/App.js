@@ -15,19 +15,18 @@ class App extends React.Component {
   }
 
   onHandleLogin(e) {
-    let valid = /^[a-zA-Z0-9-_\s]{1,12}$/.test(this.state.username);
+    let valid = /^[^-\s][a-zA-Z0-9-_\s]{0,12}$/.test(this.state.username);
 
     if (valid) {
       this.setState({ active: true });
       console.log("Username ok");
     } else {
-      console.log("Invalid username");
+      console.log("Your username must be 1-12 characters. -, _ and space is allowed.");
     }
   }
 
   onHandleChange(value) {
     this.setState({ username: value });
-    // console.log(this.state.username);
   }
 
   onHandleCloseChat() {
