@@ -9,6 +9,9 @@ class ChatView extends React.Component {
     this.state = { messages: [] };
     this.onChange = this.onChange.bind(this);
     this.socket = null;
+    
+    this.scrollBar = React.createRef();
+    this.handleScrollBar = this.handleScrollBar.bind(this);
   }
   componentDidMount() {
     this.socket = io("http://3.120.96.16:3000");
@@ -19,11 +22,14 @@ class ChatView extends React.Component {
       stateCopy.push(message);
       this.setState({ messages: stateCopy });
       console.log(message);
+      this.handleScrollBar();
+      
     });
 
     this.socket.on("messages", data => {
       this.setState({ messages: data });
       console.log(this.state);
+      this.handleScrollBar();
     });
   }
 
@@ -34,6 +40,10 @@ class ChatView extends React.Component {
 
   onChange(e) {
     this.setState({ content: e.target.value });
+  }
+
+  handleScrollBar() {
+    this.scrollBar.current.scrollTo(0, this.scrollBar.current.scrollHeight);
   }
 
   render() {
@@ -49,8 +59,9 @@ class ChatView extends React.Component {
     });
 
     return (
-      <div onChange={this.onChange} value={this.state}>
+      <div className={'rowContainer'} onChange={this.onChange} value={this.state} ref={this.scrollBar}>
         {msgList}
+        
       </div>
     );
   }
