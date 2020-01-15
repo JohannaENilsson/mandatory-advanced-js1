@@ -12,38 +12,32 @@ class App extends React.Component {
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleLogin = this.onHandleLogin.bind(this);
     this.onHandleCloseChat = this.onHandleCloseChat.bind(this);
- 
   }
 
-  onHandleLogin(e){
+  onHandleLogin(e) {
     let valid = /^[a-zA-Z0-9-_\s]{1,12}$/.test(this.state.username);
-    
-    if(valid){
-      this.setState({active: true});
-      console.log('Username ok');
+
+    if (valid) {
+      this.setState({ active: true });
+      console.log("Username ok");
     } else {
-      console.log('Invalid username');
+      console.log("Invalid username");
     }
   }
-
 
   onHandleChange(value) {
     this.setState({ username: value });
     // console.log(this.state.username);
   }
-  
 
-   onHandleCloseChat(){
-     this.setState({
-       username: '',
-       active: false
-     });
-   }
-
-
+  onHandleCloseChat() {
+    this.setState({
+      username: "",
+      active: false
+    });
+  }
 
   render() {
-
     let login;
     let closeChat;
     let chatView;
@@ -51,14 +45,15 @@ class App extends React.Component {
 
     if (!this.state.active) {
       login = (
-        <Login onChange={this.onHandleChange} 
-        onSubmit={this.onHandleLogin}
-          value={this.state.username} 
+        <Login
+          onChange={this.onHandleChange}
+          onSubmit={this.onHandleLogin}
+          value={this.state.username}
         />
       );
     } else {
-      closeChat = <CloseChat onClick={this.onHandleCloseChat}/>;
-      chatView = <ChatView onClick={this.onHandleCloseChat}/>;
+      closeChat = <CloseChat onClick={this.onHandleCloseChat} />;
+      chatView = <ChatView onClick={this.onHandleCloseChat} />;
       sendChatMsg = <SendChatMsg value={this.state.username} />;
     }
     return (
@@ -67,12 +62,9 @@ class App extends React.Component {
         {closeChat}
         {chatView}
         {sendChatMsg}
-
-        {this.state.username}
       </div>
     );
   }
 }
 
 export default App;
-

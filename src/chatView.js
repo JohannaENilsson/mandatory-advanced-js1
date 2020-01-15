@@ -1,10 +1,7 @@
 import React from "react";
 import io from "socket.io-client";
-import {emojify} from 'react-emojione';
-import Linkify from 'react-linkify';
-
-// när chatvyn Inmount -> connection till socket och eventlyssnarna
-// får meddelande uppdat staten
+import { emojify } from "react-emojione";
+import Linkify from "react-linkify";
 
 class ChatView extends React.Component {
   constructor(props) {
@@ -12,11 +9,10 @@ class ChatView extends React.Component {
     this.state = { messages: [] };
     this.onChange = this.onChange.bind(this);
     this.socket = null;
-    
   }
   componentDidMount() {
     this.socket = io("http://3.120.96.16:3000");
- 
+
     this.socket.on("new_message", message => {
       let stateCopy = this.state.messages.slice(1);
       console.log(stateCopy);
@@ -31,12 +27,11 @@ class ChatView extends React.Component {
     });
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.socket.close(this.props.onClick);
     console.log(this.socket);
   }
 
-  
   onChange(e) {
     this.setState({ content: e.target.value });
   }
@@ -46,7 +41,9 @@ class ChatView extends React.Component {
       return msg.id !== null ? (
         <div className="MsgRow" key={msg.id}>
           <span>{msg.username} says </span>
-          <div><Linkify>{emojify(msg.content)}</Linkify></div>
+          <div>
+            <Linkify>{emojify(msg.content)}</Linkify>
+          </div>
         </div>
       ) : null;
     });

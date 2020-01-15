@@ -51,7 +51,7 @@ class SendChatMsg extends React.Component {
     return (
       <div className={"SendChatMsg"}>
         <form onSubmit={this.onSubmit} onKeyPress={this.onKeyPress}>
-          <span>{this.props.username}</span>
+          <span>{this.props.value}</span>
           <div>
             <textarea
               type="text"
