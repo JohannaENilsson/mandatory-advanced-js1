@@ -6,17 +6,15 @@ const socket = io("http://3.120.96.16:3000");
 class SendChatMsg extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { content: "" };
+    this.state = { content: "", messageLength: false };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   onSubmit(e) {
-    let valid = /^[^-\s][a-zåäöA-ZÅÄÖ0-9-_\s?]{1,200}$/.test(e.target.value);
-    console.log(valid);
     e.preventDefault();
-    if (valid) {
+    if (this.state.content.length > 0 && this.state.content.length <= 200) {
       this.setState(
         socket.emit(
           "message",
@@ -31,12 +29,13 @@ class SendChatMsg extends React.Component {
       );
       this.setState({ content: "" });
     } else {
-      console.log("Fail");
+      this.setState({ messageLength: false });
+      console.log("msg to long");
     }
   }
 
   onChange(e) {
-    this.setState({ content: e.target.value });
+    this.setState({ content: e.target.value, messageLength: true });
   }
 
   onKeyPress = event => {

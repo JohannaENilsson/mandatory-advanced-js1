@@ -16,8 +16,8 @@ class App extends React.Component {
   }
 
   onHandleLogin(e){
-    let valid = /^[^-\s][a-zåäöA-ZÅÄÖ0-9-_\s]{1,12}$/.test(this.state.username);
-    //^[^-\s][a-zåäöA-ZÅÄÖ0-9_\s-]{1,12}+$
+    let valid = /^[a-zA-Z0-9-_\s]{1,12}$/.test(this.state.username);
+    
     if(valid){
       this.setState({active: true});
       console.log('Username ok');
@@ -73,9 +73,6 @@ class App extends React.Component {
     );
   }
 }
-//
+
 export default App;
-// {valid} ? <ChatView /> : <Login />
-// i chaten
-//componentWillUnmont
-// sockit.off(messeges)
+

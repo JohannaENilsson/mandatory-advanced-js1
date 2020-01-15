@@ -1,5 +1,5 @@
 import React from 'react';
-import io from "socket.io-client"; // använd i alla filer som använder biblioteket
+
 
 class Login extends React.Component {
     constructor(props){
