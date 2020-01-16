@@ -8,20 +8,24 @@ import Login from "./login.js";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { username: "", active: false };
+    this.state = { username: "", active: false, error: "" };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleLogin = this.onHandleLogin.bind(this);
     this.onHandleCloseChat = this.onHandleCloseChat.bind(this);
   }
 
   onHandleLogin(e) {
-    let valid = /^[^-\s][a-zA-Z0-9-_\s]{0,12}$/.test(this.state.username);
+    let valid = /^[^-\s\åäöÅÄÖ][a-zA-Z0-9-_\s]{0,12}$/.test(
+      this.state.username
+    );
 
     if (valid) {
-      this.setState({ active: true });
-      console.log("Username ok");
+      this.setState({ active: true, error: "" });
     } else {
-      console.log("Your username must be 1-12 characters. -, _ and space is allowed.");
+      this.setState({
+        error:
+          "Your username must be 1-12 characters. -, _ and space is allowed."
+      });
     }
   }
 
@@ -41,6 +45,7 @@ class App extends React.Component {
     let closeChat;
     let chatView;
     let sendChatMsg;
+    let error = <p className={"error"}>{this.state.error}</p>;
 
     if (!this.state.active) {
       login = (
@@ -61,6 +66,7 @@ class App extends React.Component {
         {closeChat}
         {chatView}
         {sendChatMsg}
+        {error}
       </div>
     );
   }

@@ -9,13 +9,11 @@ class Login extends React.Component {
 
   onChange(e) {
     this.props.onChange(e.target.value);
-    console.log(e.target.value);
   }
 
   onSubmit = e => {
     e.preventDefault();
     this.props.onSubmit(e.target);
-    console.log(e.target);
   };
 
   render() {

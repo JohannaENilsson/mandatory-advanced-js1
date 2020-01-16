@@ -6,7 +6,7 @@ const socket = io("http://3.120.96.16:3000");
 class SendChatMsg extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { content: "", messageLength: false };
+    this.state = { content: "", messageLength: false, error: "" };
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
@@ -28,10 +28,12 @@ class SendChatMsg extends React.Component {
             }
           )
         );
-        this.setState({ content: "" });
+        this.setState({ content: "", error: "" });
       } else {
-        this.setState({ messageLength: false });
-        console.log("msg to long");
+        this.setState({
+          messageLength: false,
+          error: "The message must not exceed 200 characters"
+        });
       }
     }
   }
@@ -49,21 +51,24 @@ class SendChatMsg extends React.Component {
   };
 
   render() {
-    // console.log(this.props.value);
+    let error = <p className={"error"}>{this.state.error}</p>;
     return (
-      <div className={"SendChatMsg"}>
-        <form onSubmit={this.onSubmit} onKeyPress={this.onKeyPress}>
-          <span>{this.props.value}</span>
-          <div>
-            <textarea
-              type="text"
-              onChange={this.onChange}
-              value={this.state.content}
-            ></textarea>
-            <button>Send</button>
-          </div>
-        </form>
-      </div>
+      <>
+        {error}
+        <div className={"SendChatMsg"}>
+          <form onSubmit={this.onSubmit} onKeyPress={this.onKeyPress}>
+            <span>{this.props.value}</span>
+            <div>
+              <textarea
+                type="text"
+                onChange={this.onChange}
+                value={this.state.content}
+              ></textarea>
+              <button>Send</button>
+            </div>
+          </form>
+        </div>
+      </>
     );
   }
 }

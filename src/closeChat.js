@@ -8,13 +8,11 @@ class CloseChat extends React.Component {
   onClick(e) {
     e.preventDefault();
     this.props.onClick(e.target);
-    console.log("you clicked me!");
   }
 
   render() {
     return (
       <>
-        {" "}
         <button className={"closeChat"} onClick={this.onClick}>
           X
         </button>
